@@ -1,3 +1,3 @@
 # MicroDisplay
 
-![alt tag](http://i.imgur.com/Y5sKLFS.png)
+![alt tag](http://i.imgur.com/3peAQUF.png)
