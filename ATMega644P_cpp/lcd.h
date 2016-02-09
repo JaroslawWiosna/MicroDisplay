@@ -56,23 +56,28 @@
 // tu konfigurujemy port i piny do jakich pod³¹czymy linie D7..D4 LCD
 #define LCD_D7PORT  A
 #define LCD_D7 		7
+
 #define LCD_D6PORT  A
 #define LCD_D6 		6
+
 #define LCD_D5PORT  A
 #define LCD_D5 		5
+
 #define LCD_D4PORT  A
 #define LCD_D4 		4
 
 
 // tu definiujemy piny procesora do których pod³¹czamy sygna³y RS,RW, E
-#define LCD_RSPORT 	A
-#define LCD_RS 		1
-
-#define LCD_RWPORT 	A
-#define LCD_RW 		2
-
 #define LCD_EPORT 	A
 #define LCD_E 		3
+
+#define LCD_RSPORT 	A
+#define LCD_RS 		2
+
+#define LCD_RWPORT 	A
+#define LCD_RW 		1
+
+
 //------------------------------------------------  koniec ustawieñ sprzêtowych ---------------
 
 
@@ -90,43 +95,46 @@
 //****************************************************************************************
 //----------------------------------------------------------------------------------------
 
-#define USE_LCD_LOCATE	1			// ustawia kursor na wybranej pozycji Y,X (Y=0-3, X=0-n)
+//enum : uint8_t
+//{
+#define	USE_LCD_LOCATE	1			// ustawia kursor na wybranej pozycji Y,X (Y=0-3, X=0-n)
 
-#define USE_LCD_CHAR 	1			// wysy³a pojedynczy znak jako argument funkcji
+#define	USE_LCD_CHAR 	1			// wysy³a pojedynczy znak jako argument funkcji
 
-#define USE_LCD_STR_P 	1			// wysy³a string umieszczony w pamiêci FLASH
-#define USE_LCD_STR_E 	1			// wysy³a string umieszczony w pamiêci FLASH
+#define	USE_LCD_STR_P 	1			// wysy³a string umieszczony w pamiêci FLASH
+#define	USE_LCD_STR_E 	1			// wysy³a string umieszczony w pamiêci FLASH
 
-#define USE_LCD_INT 	1			// wyœwietla liczbê dziesietn¹ na LCD
-#define USE_LCD_HEX 	1			// wyœwietla liczbê szesnastkow¹ na LCD
+#define	USE_LCD_INT 	1			// wyœwietla liczbê dziesietn¹ na LCD
+#define	USE_LCD_HEX 	1			// wyœwietla liczbê szesnastkow¹ na LCD
 
-#define USE_LCD_DEFCHAR		1		// wysy³a zdefiniowany znak z pamiêci RAM
-#define USE_LCD_DEFCHAR_P 	1		// wysy³a zdefiniowany znak z pamiêci FLASH
-#define USE_LCD_DEFCHAR_E 	1		// wysy³a zdefiniowany znak z pamiêci EEPROM
+#define	USE_LCD_DEFCHAR		1		// wysy³a zdefiniowany znak z pamiêci RAM
+#define	USE_LCD_DEFCHAR_P 	1	// wysy³a zdefiniowany znak z pamiêci FLASH
+#define	USE_LCD_DEFCHAR_E 	1		// wysy³a zdefiniowany znak z pamiêci EEPROM
 
-#define USE_LCD_CURSOR_ON 		0	// obs³uga w³¹czania/wy³¹czania kursora
-#define USE_LCD_CURSOR_BLINK 	0	// obs³uga w³¹czania/wy³¹czania migania kursora
-#define USE_LCD_CURSOR_HOME 	0	// ustawia kursor na pozycji pocz¹tkowej
-
-//------------------------------------------------  koniec ustawieñ kompilacji ---------------
-
-
-
+#define	USE_LCD_CURSOR_ON 	0	// obs³uga w³¹czania/wy³¹czania kursora
+#define	USE_LCD_CURSOR_HOME 	0	// ustawia kursor na pozycji pocz¹tkowej
+//};
 
 
 
 // definicje adresów w DDRAM dla ró¿nych wyœwietlaczy
 // inne s¹ w wyœwietlaczach 2wierszowych i w 4wierszowych
 #if ( (LCD_ROWS == 4) && (LCD_COLS == 16) )
-#define LCD_LINE1 0x00		// adres 1 znaku 1 wiersza
-#define LCD_LINE2 0x28		// adres 1 znaku 2 wiersza
-#define LCD_LINE3 0x14  	// adres 1 znaku 3 wiersza
-#define LCD_LINE4 0x54  	// adres 1 znaku 4 wiersza
+enum : uint8_t
+{
+	LCD_LINE1 = 0x00,		// adres 1 znaku 1 wiersza
+	LCD_LINE2 = 0x28,		// adres 1 znaku 2 wiersza
+	LCD_LINE3 = 0x14,  	// adres 1 znaku 3 wiersza
+	LCD_LINE4 0x54  	// adres 1 znaku 4 wiersza
+};
 #else
-#define LCD_LINE1 0x00		// adres 1 znaku 1 wiersza
-#define LCD_LINE2 0x40		// adres 1 znaku 2 wiersza
-#define LCD_LINE3 0x10  	// adres 1 znaku 3 wiersza
-#define LCD_LINE4 0x50  	// adres 1 znaku 4 wiersza
+enum : uint8_t
+{
+	LCD_LINE1 = 0x00,		// adres 1 znaku 1 wiersza
+	LCD_LINE2 = 0x40,		// adres 1 znaku 2 wiersza
+	LCD_LINE3 = 0x10, 	// adres 1 znaku 3 wiersza
+	LCD_LINE4 = 0x50  	// adres 1 znaku 4 wiersza
+};
 #endif
 
 
@@ -142,81 +150,95 @@
 #define SDDR(x) (DDR##x)
 
 
-// Komendy steruj¹ce
-#define LCDC_CLS					0x01
-#define LCDC_HOME					0x02
-#define LCDC_ENTRY					0x04
-#define LCDC_ENTRYR					0x02
-#define LCDC_ENTRYL					0
-#define LCDC_MOVE					0x01
-#define LCDC_ONOFF					0x08
-#define LCDC_DISPLAYON				0x04
-#define LCDC_CURSORON				0x02
-#define LCDC_CURSOROFF				0
-#define LCDC_BLINKON				0x01
-#define LCDC_SHIFT					0x10
-#define LCDC_SHIFTDISP				0x08
-#define LCDC_SHIFTR					0x04
-#define LCDC_SHIFTL					0
-#define LCDC_FUNC					0x20
-#define LCDC_FUNC8B					0x10
-#define LCDC_FUNC4B					0
-#define LCDC_FUNC2L					0x08
-#define LCDC_FUNC1L					0
-#define LCDC_FUNC5x10				0x04
-#define LCDC_FUNC5x7				0
-#define LCDC_SET_CGRAM				0x40
-#define LCDC_SET_DDRAM				0x80
+// Komendy sterujace
+enum : uint8_t
+{
+	LCDC_CLS					= 0x01,
+	LCDC_HOME					= 0x02,
+	LCDC_ENTRY					= 0x04,
+	LCDC_ENTRYR					= 0x02,
+	LCDC_ENTRYL					= 0,
+	LCDC_MOVE					= 0x01,
+	LCDC_ONOFF					= 0x08,
+	LCDC_DISPLAYON				= 0x04,
+	LCDC_CURSORON				= 0x02,
+	LCDC_CURSOROFF				= 0,
+	LCDC_BLINKON				= 0x01,
+	LCDC_SHIFT					= 0x10,
+	LCDC_SHIFTDISP				= 0x08,
+	LCDC_SHIFTR					= 0x04,
+	LCDC_SHIFTL					= 0,
+	LCDC_FUNC					= 0x20,
+	LCDC_FUNC8B					= 0x10,
+	LCDC_FUNC4B					= 0,
+	LCDC_FUNC2L					= 0x08,
+	LCDC_FUNC1L					= 0,
+	LCDC_FUNC5x10				= 0x04,
+	LCDC_FUNC5x7				= 0,
+	LCDC_SET_CGRAM				= 0x40,
+	LCDC_SET_DDRAM				= 0x80
+};
 
-//
-//
-//
-//class Lcd44780
-//{
-//public:
-//	// deklaracje funkcji na potrzeby innych modu³ów
-//	void init(void);								// W£¥CZONA na sta³e do kompilacji
-//	void cls(void);									// W£¥CZONA na sta³e do kompilacji
-//	void str(char * str);							// W£¥CZONA na sta³e do kompilacji
-//
-//	void locate(uint8_t y, uint8_t x);				// domyœlnie W£¥CZONA z kompilacji w pliku lcd.c
-//
-//	void char_send(char c);								// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void str_P(const char * str);							// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void str_E(char * str);							// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void int_val(int val);								// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void hex(uint32_t val);								// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void defchar(uint8_t nr, uint8_t *def_znak);	// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void defchar_P(uint8_t nr, const uint8_t *def_znak);	// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void defchar_E(uint8_t nr, uint8_t *def_znak);	// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//
-//	void home(void);								// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void cursor_on(void);							// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void cursor_off(void);							// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void blink_on(void);							// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//	void blink_off(void);							// domyœlnie wy³¹czona z kompilacji w pliku lcd.c
-//};
+enum LCD_LOCATE_X : uint8_t
+{
+	X0,
+	X1,
+	X2,
+	X3,
+	X4,
+	X5,
+	X6,
+	X7,
+	X8,
+	X9,
+	X10,
+	X11,
+	X12,
+	X13,
+	X14,
+	X15
+
+};
+
+
+#if (LCD_ROWS == 2)
+enum LCD_LOCATE_Y : uint8_t
+{
+	LINE1 = LCD_LINE1,
+	LINE2 = LCD_LINE2,
+};
+
+#elif (LCD_ROWS == 4)
+enum LCD_LOCATE_Y : uint8_t
+{
+	LINE1 = LCD_LINE1,
+	LINE2 = LCD_LINE2,
+	LINE3 = LCD_LINE3,
+	LINE4 = LCD_LINE4
+};
+
+#endif
 
 class Lcd44780
 {
 	void init(void);
 
+	static void data_dir_out(void);
+	static void data_dir_in(void);
+	static void sendHalf(uint8_t data);
+	static uint8_t readHalf(void);
+
 public:
 
 	Lcd44780();
 	uint8_t check_BF(void);			// deklaracja funkcji wewnêtrznej
-
-	static /*inline*/ void data_dir_out(void);
-	static /*inline*/ void data_dir_in(void);
-	static /*inline*/ void sendHalf(uint8_t data);
-	static /*inline*/ uint8_t readHalf(void);
 	void _write_byte(unsigned char _data);
 	uint8_t _read_byte(void);
 
 	void write_cmd(uint8_t cmd);
 	void write_data(uint8_t data);
 	void char_send(char c);
-	void str(char * str);
+	void printStr(const char * str);
 	void str_P(const char * str);
 	void str_E(char * str);
 	void int_val(int val);
@@ -224,7 +246,7 @@ public:
 	void defchar(uint8_t nr, uint8_t *def_znak);
 	void defchar_P(uint8_t nr, const uint8_t *def_znak);
 	void defchar_E(uint8_t nr, uint8_t *def_znak);
-	void locate(uint8_t y, uint8_t x);
+	void locate(LCD_LOCATE_X x, LCD_LOCATE_Y y);
 	void cls(void);
 
 	void home(void);

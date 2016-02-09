@@ -228,7 +228,7 @@ void Lcd44780::char_send(char c)
 //
 //
 //----------------------------------------------------------------------------------------
-void Lcd44780::str(char * str)
+void Lcd44780::printStr(const char * str)
 {
 	register char znak;
 	while ( (znak=*(str++)) ) char_send( znak );
@@ -279,7 +279,7 @@ void Lcd44780::str_E(char * str)
 void Lcd44780::int_val(int val)
 {
 	char bufor[17];
-	str( itoa(val, bufor, 10) );
+	printStr( itoa(val, bufor, 10) );
 }
 #endif
 
@@ -292,7 +292,7 @@ void Lcd44780::int_val(int val)
 void Lcd44780::hex_val(uint32_t val)
 {
 	char bufor[17];
-	str( ltoa(val, bufor, 16) );
+	printStr( ltoa(val, bufor, 16) );
 }
 #endif
 
@@ -376,22 +376,22 @@ void Lcd44780::defchar_E(uint8_t nr, uint8_t *def_znak)
 //		w zale¿noœci od rodzaju wyœwietlacza (ile posiada wierszy)
 //
 //----------------------------------------------------------------------------------------
-void Lcd44780::locate(uint8_t y, uint8_t x)
+void Lcd44780::locate(LCD_LOCATE_X x, LCD_LOCATE_Y y)
 {
-	switch(y)
-	{
-		case 0: y = LCD_LINE1; break;
-
-#if (LCD_ROWS>1)
-	    case 1: y = LCD_LINE2; break; // adres 1 znaku 2 wiersza
-#endif
-#if (LCD_ROWS>2)
-    	case 2: y = LCD_LINE3; break; // adres 1 znaku 3 wiersza
-#endif
-#if (LCD_ROWS>3)
-    	case 3: y = LCD_LINE4; break; // adres 1 znaku 4 wiersza
-#endif
-	}
+//	switch(y)
+//	{
+//		case 0: y = (LCD_LOCATE_Y)LCD_LINE1; break;
+//
+//#if (LCD_ROWS>1)
+//	    case 1: y = (LCD_LOCATE_Y)LCD_LINE2; break; // adres 1 znaku 2 wiersza
+//#endif
+//#if (LCD_ROWS>2)
+//    	case 2: y = (LCD_LOCATE_Y)LCD_LINE3; break; // adres 1 znaku 3 wiersza
+//#endif
+//#if (LCD_ROWS>3)
+//    	case 3: y = (LCD_LOCATE_Y)LCD_LINE4; break; // adres 1 znaku 4 wiersza
+//#endif
+//	}
 
 	write_cmd( (0x80 + y + x) );
 }
